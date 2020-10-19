@@ -28,16 +28,14 @@ public class Address implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String street;
-    private String city;
-    private String zip;
-
+    private String AdditionalInfo;
+    
     @OneToMany(mappedBy = "address")
     private List<Person> persons;
 
-    public Address(String street, String city, String zip) {
+    public Address(String street, String AdditionalInfo) {
         this.street = street;
-        this.city = city;
-        this.zip = zip;
+        this.AdditionalInfo = AdditionalInfo;
         persons = new ArrayList<>();
     }
     
@@ -53,23 +51,15 @@ public class Address implements Serializable {
     public List<Person> getPerson(){
         return persons;
     }
-    
-    public String getCity() {
-        return city;
+
+    public String getAdditionalInfo() {
+        return AdditionalInfo;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setAdditionalInfo(String AdditionalInfo) {
+        this.AdditionalInfo = AdditionalInfo;
     }
-
-    public String getZip() {
-        return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
-
+ 
     public String getStreet() {
         return street;
     }
