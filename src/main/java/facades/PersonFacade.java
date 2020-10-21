@@ -40,7 +40,7 @@ public class PersonFacade {
         return emf.createEntityManager();
     }  
     
-    public Person getById(long id){
+    public Person getPersonById(long id){
         return getEntityManager().find(Person.class,id);
     }
 
@@ -102,5 +102,7 @@ public class PersonFacade {
         return getEntityManager().createQuery("SELECT person FROM Person person JOIN person.address a WHERE a.cityInfo.zip = :zip",Person.class).setParameter("zip",zip).getResultList();
         
     }
+    
+    
 
 }
