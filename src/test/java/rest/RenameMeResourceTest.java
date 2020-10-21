@@ -20,7 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 //Uncomment the line below, to temporarily disable this test
-//@Disabled
+@Disabled
 
 public class RenameMeResourceTest {
 
@@ -64,8 +64,8 @@ public class RenameMeResourceTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        r1 = new Hobby("Some txt", "More text");
-        r2 = new Hobby("aaa", "bbb");
+        //r1 = new Hobby("Some txt", "More text");
+        //r2 = new Hobby("aaa", "bbb");
         try {
             em.getTransaction().begin();
             em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();

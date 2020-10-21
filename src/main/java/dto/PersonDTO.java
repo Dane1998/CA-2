@@ -5,6 +5,7 @@ import entities.Address;
 import entities.Hobby;
 import entities.Person;
 import entities.Phone;
+import java.util.List;
      
 /**
  *
@@ -15,26 +16,35 @@ public class PersonDTO {
     private Long id;
     private String firstName;
     private String lastName;
-    private Address address;
-    private Phone phone;
-    private Hobby hobby;
+    private String email;
+    private String street;
+    private String zipCode;
+    private String city;
+    private List<Phone> phone; 
+    private List<Hobby> hobby;
 
     public PersonDTO(Person p) {
         this.id = p.getId();
         this.firstName = p.getFirstName();
         this.lastName = p.getLastName();
-        this.address = p.getAddress();
-        this.phone = p.getPhone();
-        this.hobby = p.getHobby();
+        this.street = p.getAddress().getStreet();
+        this.zipCode = p.getAddress().getCityInfo().getZipCode();
+        this.city = p.getAddress().getCityInfo().getCity();
+        this.phone = p.getPhones();
+        this.hobby = p.getHobbies();
     }
 
-    public PersonDTO(String firstName, String lastName, Address address, Phone phone, Hobby hobby) {
+    public PersonDTO(String firstName, String lastName, String email, String street, String zipCode, String city, List<Phone> phone, List<Hobby> hobby) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address = address;
+        this.email = email;
+        this.street = street;
+        this.zipCode = zipCode;
+        this.city = city;
         this.phone = phone;
         this.hobby = hobby;
     }
+
 
     public PersonDTO() {
     }
@@ -63,29 +73,52 @@ public class PersonDTO {
         this.lastName = lastName;
     }
 
-    public Address getAddress() {
-        return address;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Phone getPhone() {
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public List<Phone> getPhone() {
         return phone;
     }
 
-    public void setPhone(Phone phone) {
+    public void setPhone(List<Phone> phone) {
         this.phone = phone;
     }
 
-    public Hobby getHobby() {
+    public List<Hobby> getHobby() {
         return hobby;
     }
 
-    public void setHobby(Hobby hobby) {
+    public void setHobby(List<Hobby> hobby) {
         this.hobby = hobby;
     }
-    
-    
+
 }

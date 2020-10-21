@@ -8,11 +8,13 @@ package entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
+
 
 /**
  *
@@ -25,32 +27,33 @@ public class Phone implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int number;
+    private String number;
     private String description; 
     
-    @OneToMany(mappedBy = "phone")
-    private List<Person> persons;
+    @ManyToOne
+    private Person person;
 
-    public Phone(int number, String description) {
+    public Phone(String number, String description, Person person) {
         this.number = number;
         this.description = description;
-        persons = new ArrayList<>();
+        this.person = person;
     }
     
-    public void addPerson(Person person){
+    public void setPerson(Person person){
         if(person != null){
-            persons.add(person);
+            this.person = person;
+            person.setPhone(this);
         }
     }
     
     public Phone() {
     }
     
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
