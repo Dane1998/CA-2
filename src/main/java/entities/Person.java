@@ -31,6 +31,10 @@ public class Person implements Serializable {
     private String email;
     private String firstName;
     private String lastName;
+<<<<<<< HEAD
+=======
+    
+>>>>>>> Artem
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private Address address;
