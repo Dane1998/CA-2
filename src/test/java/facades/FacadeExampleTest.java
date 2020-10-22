@@ -2,6 +2,7 @@ package facades;
 
 import utils.EMF_Creator;
 import entities.Hobby;
+import entities.Person;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterAll;
@@ -17,7 +18,12 @@ import org.junit.jupiter.api.Test;
 public class FacadeExampleTest {
 
     private static EntityManagerFactory emf;
+<<<<<<< Updated upstream
     private static FacadeExample facade;
+=======
+    private static PersonFacade facade;
+        private final Person p1 = new Person("a@a.com","Artem", "Ivanov");
+>>>>>>> Stashed changes
 
     public FacadeExampleTest() {
     }
@@ -25,7 +31,12 @@ public class FacadeExampleTest {
     @BeforeAll
     public static void setUpClass() {
        emf = EMF_Creator.createEntityManagerFactoryForTest();
+<<<<<<< Updated upstream
        facade = FacadeExample.getFacadeExample(emf);
+=======
+       facade = PersonFacade.getPersonFacade(emf);
+   
+>>>>>>> Stashed changes
     }
 
     @AfterAll
@@ -40,10 +51,8 @@ public class FacadeExampleTest {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
-            //em.persist(new Hobby("Some txt", "More text"));
-            //em.persist(new Hobby("aaa", "bbb"));
-
+            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+            em.persist(p1);
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -57,8 +66,13 @@ public class FacadeExampleTest {
 
     // TODO: Delete or change this method 
     @Test
+<<<<<<< Updated upstream
     public void testAFacadeMethod() {
         assertEquals(2, facade.getRenameMeCount(), "Expects two rows in the database");
+=======
+    public void testGetAllPersons() {
+        assertEquals(1, facade.getAllPersons(), "Expects 1 rows in the database");
+>>>>>>> Stashed changes
     }
 
 }

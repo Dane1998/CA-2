@@ -16,6 +16,7 @@ public class PersonFacade {
 
     private static PersonFacade instance;
     private static EntityManagerFactory emf;
+    private final Person p1 = new Person("b@b.com", " Lasse", "kan ikke huske");
     
     //Private Constructor to ensure Singleton
     private PersonFacade() {
@@ -68,11 +69,19 @@ public class PersonFacade {
         }
     }
     //TODO
-   /* @Override
-    public Person add(Person person){
-        EntityManager em = getEntityManager();
+    
+    public void addPerson(){
+        EntityManager em = emf.createEntityManager();
+        try{
+            em.getTransaction().begin();
+            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+            em.persist(p1);
+            em.getTransaction().commit();
+        }finally{
+            em.close();
+        }
         
-    }*/
+    }
 
     
     public Person edit(Person person){
@@ -85,6 +94,10 @@ public class PersonFacade {
         }finally{
             em.close();
         }
+    }
+    
+    public List<Person> getAll(){
+        return getEntityManager().createQuery("SELECT person FROM Person person", Person.class).getResultList();
     }
 
     

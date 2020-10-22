@@ -45,4 +45,13 @@ public class PersonResource {
         PersonsDTO persons = FACADE.getAllPersons();
         return GSON.toJson(persons.getAll());
     }
+    
+    @Path("add")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String AddPersons(){
+        FACADE.addPerson();
+        return "Person is added";
+    }
+    
 }
