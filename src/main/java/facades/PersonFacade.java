@@ -45,8 +45,17 @@ public class PersonFacade {
 
     @Override
     public List<Person> getAll(){
-        return getEntityManager().createQuery("SELECT person FROM Person person", Person.class).getResultList();
+        EntityManager em = emf.createEntityManager();
+        try{
+            Query query = em.createEntityManager("Person.getAll");
+            List<Person> allPersons = query.getResultList();
+            return allPersons;
+        }finally{
+            em.close();
+        }
     }
+        //return getEntityManager().createQuery("SELECT person FROM Person person", Person.class).getResultList();
+    
 
     //TODO
    /* @Override
