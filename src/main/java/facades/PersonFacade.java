@@ -1,8 +1,11 @@
 package facades;
 
+import dto.PersonDTO;
 import dto.PersonsDTO;
+import entities.CityInfo;
 import entities.Hobby;
 import entities.Person;
+import exceptions.PersonNotFoundException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,7 +15,7 @@ import javax.persistence.Persistence;
  *
  * Rename Class to a relevant name Add add relevant facade methods
  */
-public class PersonFacade {
+public class PersonFacade implements IPersonFacade{
 
     private static PersonFacade instance;
     private static EntityManagerFactory emf;
@@ -40,16 +43,25 @@ public class PersonFacade {
         return emf.createEntityManager();
     }  
     
-    public Person getById(long id){
-        return getEntityManager().find(Person.class,id);
+    @Override 
+    public PersonDTO getPersonById(long id) throws PersonNotFoundException{
+        EntityManager em = getEntityManager();
+        Person person = em.find(Person.class, id);
+            if(person == null) {
+                    throw new PersonNotFoundException(String.format("Could not find person with provided id: ", id ));
+                } else {
+                try {
+                    return new PersonDTO(person);
+                }finally{
+                    em.close();
+                }
+            }
+                       
+        
     }
 
-    
-    public List<Person> getAll(){
-        return getEntityManager().createQuery("SELECT person FROM Person person", Person.class).getResultList();
-    }
 
-    
+    @Override
     public PersonsDTO getAllPersons() {
         EntityManager em = getEntityManager();
         try {
@@ -102,5 +114,47 @@ public class PersonFacade {
         return getEntityManager().createQuery("SELECT person FROM Person person JOIN person.address a WHERE a.cityInfo.zip = :zip",Person.class).setParameter("zip",zip).getResultList();
         
     }
+
+    @Override
+    public PersonDTO getPersonByPhone(int number) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getPersoncountByHobby(Hobby hobby) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public PersonDTO getPersonsByHobby(Hobby hobby) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getAllZipcodes() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public PersonDTO getPersonByZipcode(CityInfo zipcode) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public PersonDTO addPerson(PersonDTO personDTO) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public PersonDTO deletePerson(long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public PersonDTO editPerson(PersonDTO personDTO) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 
 }
