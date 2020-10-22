@@ -1,5 +1,6 @@
 package entities;
 
+import dto.PersonDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,14 @@ public class Person implements Serializable {
     private List<Hobby> hobbies;
     
 
+    public Person(PersonDTO dto) {
+        this.email = dto.getEmail();
+        this.firstName = dto.getFirstName();
+        this.lastName = dto.getLastName();
+        this.phones = new ArrayList();
+        this.hobbies = new ArrayList();
+    }
+
     public Person(String email, String firstName, String lastName) {
         this.email = email;
         this.firstName = firstName;
@@ -51,7 +60,7 @@ public class Person implements Serializable {
         this.phones = new ArrayList();
         this.hobbies = new ArrayList();
     }
-
+    
     public Person() {
     }
 
@@ -65,8 +74,8 @@ public class Person implements Serializable {
     }
 
     public void addPhone(Phone phone) {
-        if (phone != null) {
-            this.phones.add(phone);
+        this.phones.add(phone);
+        if (phone != null) {           
             phone.setPerson(this);
         }
     }

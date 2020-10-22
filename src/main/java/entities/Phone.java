@@ -15,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-
 /**
  *
  * @author Dane
@@ -28,41 +27,35 @@ public class Phone implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String number;
-    private String description; 
-    
+
     @ManyToOne
     private Person person;
 
-    public Phone(String number, String description, Person person) {
+    public Phone(String number) {
         this.number = number;
-        this.description = description;
-        this.person = person;
+
     }
     
-    public void setPerson(Person person){
+    public void addPerson(Person person){
+        this.person = person;
         if(person != null){
-            this.person = person;
-            person.setPhone(this);
+            person.getPhones().add(this);
         }
     }
-    
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
     public Phone() {
     }
-    
+
     public String getNumber() {
         return number;
     }
 
     public void setNumber(String number) {
         this.number = number;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Long getId() {
@@ -73,5 +66,4 @@ public class Phone implements Serializable {
         this.id = id;
     }
 
-    
 }

@@ -8,7 +8,6 @@ import entities.Hobby;
  * @author Dane
  */
 public class HobbyDTO {
-    private Long id;
     private String name;
     private String wikiLink;
     private String category;
@@ -16,7 +15,6 @@ public class HobbyDTO {
 
     
     public HobbyDTO(Hobby hobby){
-        this.id = hobby.getId();
         this.name = hobby.getName();
         this.wikiLink = hobby.getWikiLink();
         this.category = hobby.getCategory();
@@ -32,14 +30,6 @@ public class HobbyDTO {
     }
 
     public HobbyDTO() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

@@ -20,29 +20,48 @@ public class PersonDTO {
     private String street;
     private String zipCode;
     private String city;
-    private List<Phone> phone; 
+    private List<Phone> phoneNumber; 
     private List<Hobby> hobby;
+    private String pNumber;
+    private String hobbyName;
 
-    public PersonDTO(Person p) {
-        this.id = p.getId();
-        this.firstName = p.getFirstName();
-        this.lastName = p.getLastName();
-        this.street = p.getAddress().getStreet();
-        this.zipCode = p.getAddress().getCityInfo().getZipCode();
-        this.city = p.getAddress().getCityInfo().getCity();
-        this.phone = p.getPhones();
-        this.hobby = p.getHobbies();
+    public PersonDTO(Person person) {
+        this.id = person.getId();
+        this.firstName = person.getFirstName();
+        this.lastName = person.getLastName();
+        this.street = person.getAddress().getStreet();
+        this.zipCode = person.getAddress().getCityInfo().getZipCode();
+        this.city = person.getAddress().getCityInfo().getCity();       
+        this.hobby = person.getHobbies();
     }
 
-    public PersonDTO(String firstName, String lastName, String email, String street, String zipCode, String city, List<Phone> phone, List<Hobby> hobby) {
+    public PersonDTO(String firstName, String lastName, String email, String street, String zipCode, String city, String pNumber, String hobbyName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.street = street;
         this.zipCode = zipCode;
         this.city = city;
-        this.phone = phone;
-        this.hobby = hobby;
+        this.phoneNumber = phoneNumber;
+        this.hobbyName = hobbyName;
+    }
+
+    public String getpNumber() {
+        return pNumber;
+    }
+
+    public void setpNumber(String pNumber) {
+        this.pNumber = pNumber;
+    }
+    
+    
+
+    public String getHobbyName() {
+        return hobbyName;
+    }
+
+    public void setHobbyName(String hobbyName) {
+        this.hobbyName = hobbyName;
     }
 
 
@@ -105,12 +124,12 @@ public class PersonDTO {
         this.city = city;
     }
 
-    public List<Phone> getPhone() {
-        return phone;
+    public List<Phone> getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(List<Phone> phone) {
-        this.phone = phone;
+    public void setPhone(List<Phone> phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public List<Hobby> getHobby() {

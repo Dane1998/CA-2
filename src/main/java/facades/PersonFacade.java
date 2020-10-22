@@ -1,33 +1,36 @@
 package facades;
 
+import dto.HobbyDTO;
 import dto.PersonDTO;
 import dto.PersonsDTO;
+import entities.Address;
 import entities.CityInfo;
 import entities.Hobby;
 import entities.Person;
+import entities.Phone;
 import exceptions.PersonNotFoundException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.validation.constraints.Email;
 
 /**
  *
  * Rename Class to a relevant name Add add relevant facade methods
  */
-public class PersonFacade implements IPersonFacade{
+public class PersonFacade implements IPersonFacade {
 
     private static PersonFacade instance;
     private static EntityManagerFactory emf;
-    
+
     //Private Constructor to ensure Singleton
     private PersonFacade() {
-        
+
     }
-    
-    
+
     /**
-     * 
+     *
      * @param _emf
      * @return an instance of this facade class.
      */
@@ -41,25 +44,23 @@ public class PersonFacade implements IPersonFacade{
 
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
-    }  
-    
-    @Override 
-    public PersonDTO getPersonById(long id) throws PersonNotFoundException{
-        EntityManager em = getEntityManager();
-        Person person = em.find(Person.class, id);
-            if(person == null) {
-                    throw new PersonNotFoundException(String.format("Could not find person with provided id: ", id ));
-                } else {
-                try {
-                    return new PersonDTO(person);
-                }finally{
-                    em.close();
-                }
-            }
-                       
-        
     }
 
+    @Override
+    public PersonDTO getPersonById(long id) throws PersonNotFoundException {
+        EntityManager em = getEntityManager();
+        Person person = em.find(Person.class, id);
+        if (person == null) {
+            throw new PersonNotFoundException(String.format("Could not find person with provided id: ", id));
+        } else {
+            try {
+                return new PersonDTO(person);
+            } finally {
+                em.close();
+            }
+        }
+
+    }
 
     @Override
     public PersonsDTO getAllPersons() {
@@ -70,49 +71,48 @@ public class PersonFacade implements IPersonFacade{
             em.close();
         }
     }
+
     //TODO
-   /* @Override
+    /* @Override
     public Person add(Person person){
         EntityManager em = getEntityManager();
         
     }*/
-
-    
-    public Person edit(Person person){
+    public Person edit(Person person) {
         EntityManager em = getEntityManager();
-        try{
+        try {
             em.getTransaction().begin();
             em.merge(person);
             em.getTransaction().commit();
             return person;
-        }finally{
+        } finally {
             em.close();
         }
     }
 
-    
-    public Person delete(long id){
+    public Person delete(long id) {
         EntityManager em = getEntityManager();
         Person p = em.find(Person.class, id);
-        if(p != null){
-            try{
+        if (p != null) {
+            try {
                 em.getTransaction().begin();
                 em.remove(p);
                 em.getTransaction().commit();
-            }finally{
+            } finally {
                 em.close();
             }
         }
-        return p; 
+        return p;
     }
 
-    public Person getByPhone(String phone){
-        return getEntityManager().createQuery("SELECT person FROM Person person JOIN person.phones phone WHERE phone.number = :number", Person.class).setParameter("number",phone).getSingleResult();
-        
+    public Person getByPhone(String phone) {
+        return getEntityManager().createQuery("SELECT person FROM Person person JOIN person.phones phone WHERE phone.number = :number", Person.class).setParameter("number", phone).getSingleResult();
+
     }
-    public List<Person> getPersonsByCity(String zip){
-        return getEntityManager().createQuery("SELECT person FROM Person person JOIN person.address a WHERE a.cityInfo.zip = :zip",Person.class).setParameter("zip",zip).getResultList();
-        
+
+    public List<Person> getPersonsByCity(String zip) {
+        return getEntityManager().createQuery("SELECT person FROM Person person JOIN person.address a WHERE a.cityInfo.zip = :zip", Person.class).setParameter("zip", zip).getResultList();
+
     }
 
     @Override
@@ -121,28 +121,28 @@ public class PersonFacade implements IPersonFacade{
     }
 
     @Override
-    public int getPersoncountByHobby(Hobby hobby) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public PersonDTO getPersonsByHobby(Hobby hobby) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getAllZipcodes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public PersonDTO getPersonByZipcode(CityInfo zipcode) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public PersonDTO addPerson(PersonDTO personDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = getEntityManager();
+        Person person = new Person(personDTO);
+
+        try {
+            Query cityQuery = em.createQuery("SELECT c FROM CityInfo c WHERE c.zipCode =:zip");
+            cityQuery.setParameter("zip", personDTO.getZipCode());
+            CityInfo cityInfo = (CityInfo) cityQuery.getSingleResult();
+            person.setAddress(new Address(personDTO.getStreet(), cityInfo));
+            Query hobbyQuery = em.createQuery("SELECT h FROM Hobby h WHERE h.name =:name");
+            hobbyQuery.setParameter("name", personDTO.getHobbyName());
+            Hobby hobby = (Hobby) hobbyQuery.getSingleResult();
+            person.addHobby(hobby);
+            person.addPhone(new Phone(personDTO.getpNumber()));
+
+            em.getTransaction().begin();
+            em.persist(person);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new PersonDTO(person);
     }
 
     @Override
@@ -154,7 +154,5 @@ public class PersonFacade implements IPersonFacade{
     public PersonDTO editPerson(PersonDTO personDTO) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
 
 }

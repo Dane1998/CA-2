@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
@@ -14,6 +16,10 @@ import javax.persistence.OneToMany;
  * @author Dane
  */
 @Entity
+@NamedQueries({
+    //@NamedQuery(name = "Person.deleteAllRows", query = "DELETE FROM Person"),
+    @NamedQuery(name = "CityInfo.getAll", query = "SELECT c FROM CityInfo c")
+})
 public class CityInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;

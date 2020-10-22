@@ -17,10 +17,7 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Hobby implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
-    
+    @Id 
     @Column(length = 50)
     private String name;
     
@@ -88,13 +85,6 @@ public class Hobby implements Serializable {
         this.persons = persons;
     }
 
-    public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long Id) {
-        this.Id = Id;
-    }
     
     
     
