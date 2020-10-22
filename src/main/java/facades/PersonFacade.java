@@ -1,6 +1,8 @@
 package facades;
 
+import dto.PersonsDTO;
 import entities.Hobby;
+import entities.Person;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -26,7 +28,7 @@ public class PersonFacade {
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static PersonFacade getPersonFacadeExample(EntityManagerFactory _emf) {
+    public static PersonFacade getPersonFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new PersonFacade();
@@ -36,14 +38,13 @@ public class PersonFacade {
 
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
-    }
+    }  
     
-    @Override
     public Person getById(long id){
         return getEntityManager().find(Person.class,id);
     }
 
-    @Override
+    
     public List<Person> getAll(){
         EntityManager em = emf.createEntityManager();
         try{
@@ -57,6 +58,15 @@ public class PersonFacade {
         //return getEntityManager().createQuery("SELECT person FROM Person person", Person.class).getResultList();
     
 
+    
+    public PersonsDTO getAllPersons() {
+        EntityManager em = getEntityManager();
+        try {
+            return new PersonsDTO(em.createNamedQuery("Person.getAll").getResultList());
+        } finally {
+            em.close();
+        }
+    }
     //TODO
    /* @Override
     public Person add(Person person){
@@ -64,7 +74,7 @@ public class PersonFacade {
         
     }*/
 
-    @Override
+    
     public Person edit(Person person){
         EntityManager em = getEntityManager();
         try{
@@ -77,7 +87,7 @@ public class PersonFacade {
         }
     }
 
-    @Override
+    
     public Person delete(long id){
         EntityManager em = getEntityManager();
         Person p = em.find(Person.class, id);

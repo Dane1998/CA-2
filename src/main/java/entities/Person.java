@@ -1,6 +1,8 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,21 +33,23 @@ public class Person implements Serializable {
     private String email;
     private String firstName;
     private String lastName;
-    
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
     private Address address;
 
-    @OneToMany(cascade = {CascadeType.PERSIST})
-    private Phone phone;
+    @OneToMany(mappedBy = "person", cascade = {CascadeType.PERSIST})
+    private List<Phone> phones;
 
     @ManyToMany(cascade = {CascadeType.PERSIST})
-    private Hobby hobby;
+    private List<Hobby> hobbies;
+    
 
     public Person(String email, String firstName, String lastName) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.phones = new ArrayList();
+        this.hobbies = new ArrayList();
     }
 
     public Person() {
@@ -60,34 +64,35 @@ public class Person implements Serializable {
         }
     }
 
-    public void setPhone(Phone phone) {
+    public void addPhone(Phone phone) {
         if (phone != null) {
-            this.phone = phone;
-            phone.addPerson(this);
-        } else {
-            this.phone = null;
+            this.phones.add(phone);
+            phone.setPerson(this);
         }
     }
 
-    public void setHobby(Hobby hobby) {
+    public void addHobby(Hobby hobby) {
         if (hobby != null) {
-            this.hobby = hobby;
+            this.hobbies.add(hobby);
             hobby.addPerson(this);
-        } else {
-            this.hobby = null;
+        }
+    }
+    
+    public void setPhone(Phone phone){
+        if(phone != null){
+            phones.add(phone);
         }
     }
 
+    public List<Phone> getPhones(){
+        return phones;
+    }
+    
+    public List<Hobby> getHobbies (){
+        return hobbies;
+    }
     public Address getAddress() {
         return address;
-    }
-
-    public Phone getPhone() {
-        return phone;
-    }
-
-    public Hobby getHobby() {
-        return hobby;
     }
 
     public String getEmail() {

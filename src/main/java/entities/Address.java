@@ -4,10 +4,12 @@ package entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -27,15 +29,20 @@ public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String street;
-    private String AdditionalInfo;
     
     @OneToMany(mappedBy = "address")
     private List<Person> persons;
+    
+    private String street;
+    
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private CityInfo cityInfo;
+    
+    
 
-    public Address(String street, String AdditionalInfo) {
+    public Address(String street, CityInfo cityInfo) {
         this.street = street;
-        this.AdditionalInfo = AdditionalInfo;
+        this.cityInfo = cityInfo;
         persons = new ArrayList<>();
     }
     
@@ -48,16 +55,21 @@ public class Address implements Serializable {
         }
     }
     
+    public void setCityInfo(CityInfo cityInfo){
+        if(cityInfo != null){
+            this.cityInfo = cityInfo;
+            cityInfo.addAddress(this);
+        }else{
+            this.cityInfo = null;
+        }
+    }
+    
+    public CityInfo getCityInfo(){
+        return cityInfo;
+    }
+    
     public List<Person> getPerson(){
         return persons;
-    }
-
-    public String getAdditionalInfo() {
-        return AdditionalInfo;
-    }
-
-    public void setAdditionalInfo(String AdditionalInfo) {
-        this.AdditionalInfo = AdditionalInfo;
     }
  
     public String getStreet() {
