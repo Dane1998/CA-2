@@ -18,12 +18,8 @@ import org.junit.jupiter.api.Test;
 public class FacadeExampleTest {
 
     private static EntityManagerFactory emf;
-<<<<<<< Updated upstream
-    private static FacadeExample facade;
-=======
     private static PersonFacade facade;
         private final Person p1 = new Person("a@a.com","Artem", "Ivanov");
->>>>>>> Stashed changes
 
     public FacadeExampleTest() {
     }
@@ -31,12 +27,7 @@ public class FacadeExampleTest {
     @BeforeAll
     public static void setUpClass() {
        emf = EMF_Creator.createEntityManagerFactoryForTest();
-<<<<<<< Updated upstream
-       facade = FacadeExample.getFacadeExample(emf);
-=======
        facade = PersonFacade.getPersonFacade(emf);
-   
->>>>>>> Stashed changes
     }
 
     @AfterAll
@@ -66,13 +57,8 @@ public class FacadeExampleTest {
 
     // TODO: Delete or change this method 
     @Test
-<<<<<<< Updated upstream
     public void testAFacadeMethod() {
-        assertEquals(2, facade.getRenameMeCount(), "Expects two rows in the database");
-=======
-    public void testGetAllPersons() {
-        assertEquals(1, facade.getAllPersons(), "Expects 1 rows in the database");
->>>>>>> Stashed changes
+        assertEquals(2, facade.getAllPersons(), "Expects two rows in the database");
     }
 
 }
