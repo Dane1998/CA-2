@@ -59,7 +59,7 @@ public class HobbyFacade implements IHobbyFacade {
     public PersonsDTO getPersonsByHobby(String hobby) {
         EntityManager em = getEntityManager();
         try {
-            Query personList = em.createQuery("SELECT p FROM Person p JOIN p.hobies h WHERE h.name =:hobby", Person.class);
+            Query personList = em.createQuery("SELECT p FROM Person p JOIN p.hobbies h WHERE h.name =:hobby", Person.class);
             personList.setParameter("hobby", hobby);
             List<Person> persons = personList.getResultList();
             PersonsDTO allPersons = new PersonsDTO(persons);

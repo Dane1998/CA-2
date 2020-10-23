@@ -26,7 +26,7 @@ public class Hobby implements Serializable {
     private String type;
     
     @ManyToMany(mappedBy = "hobbies")
-    private List<Person> persons;
+    private List<Person>  persons;
 
     public Hobby() {
     }

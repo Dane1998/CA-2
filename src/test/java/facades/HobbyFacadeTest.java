@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
 
@@ -22,6 +23,7 @@ import utils.EMF_Creator;
  *
  * @author Dane
  */
+@Disabled
 public class HobbyFacadeTest {
     
     private static EntityManagerFactory emf;

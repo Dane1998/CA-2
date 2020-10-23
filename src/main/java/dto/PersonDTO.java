@@ -21,7 +21,7 @@ public class PersonDTO {
     private String street;
     private String zipCode;
     private String city;
-    private List<Phone> phoneNumber; 
+    private List<PhoneDTO> phoneNumber; 
     private List<HobbyDTO> hobby;
     private String pNumber;
     private String hobbyName;
@@ -32,15 +32,20 @@ public class PersonDTO {
         this.lastName = person.getLastName();
         this.street = person.getAddress().getStreet();
         this.zipCode = person.getAddress().getCityInfo().getZipCode();
-        this.city = person.getAddress().getCityInfo().getCity();       
-        this.hobby = new ArrayList<>();
+        this.city = person.getAddress().getCityInfo().getCity();  
+        this.email= person.getEmail();
         
+        this.hobby = new ArrayList<>();
         for(Hobby hobby : person.getHobbies()){
             this.hobby.add(new HobbyDTO(hobby));
         }
+        this.phoneNumber = new ArrayList<>();
+        for (Phone phone : person.getPhones()) {
+            this.phoneNumber.add(new PhoneDTO(phone));
+        }
     }
 
-    public PersonDTO(String firstName, String lastName, String email, String street, String zipCode, String city, List<HobbyDTO> hobby, List<Phone> phoneNumber) {
+    public PersonDTO(String firstName, String lastName, String email, String street, String zipCode, String city, List<HobbyDTO> hobby, List<PhoneDTO> phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
