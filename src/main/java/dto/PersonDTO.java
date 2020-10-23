@@ -132,11 +132,11 @@ public class PersonDTO {
         this.city = city;
     }
 
-    public List<Phone> getPhoneNumber() {
+    public List<PhoneDTO> getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhone(List<Phone> phoneNumber) {
+    public void setPhone(List<PhoneDTO> phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
