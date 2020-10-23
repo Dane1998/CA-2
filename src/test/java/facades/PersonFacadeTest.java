@@ -49,25 +49,24 @@ public class PersonFacadeTest {
         EntityManager em = emf.createEntityManager();
 
         try {
-        p1.addHobby(h1);
-        p2.addHobby(h2);
-        p1.addPhone(tel1);
-        p2.addPhone(tel2);
-        p1.setAddress(a1);
-        p2.setAddress(a2);
+            p1.addHobby(h1);
+            p2.addHobby(h2);
+            p1.addPhone(tel1);
+            p2.addPhone(tel2);
+            p1.setAddress(a1);
+            p2.setAddress(a2);
 
-        em.getTransaction().begin();
-        em.persist(h1);
-        em.persist(h2);
-        em.persist(c1);
-        em.persist(c2);
-        em.persist(p1);
-        em.persist(p2);
-        em.getTransaction().commit();
+            em.getTransaction().begin();
+            em.persist(h1);
+            em.persist(h2);
+            em.persist(c1);
+            em.persist(c2);
+            em.persist(p1);
+            em.persist(p2);
+            em.getTransaction().commit();
         } finally {
             em.close();
         }
-       
 
     }
 
@@ -79,9 +78,8 @@ public class PersonFacadeTest {
     // Setup the DataBase in a known state BEFORE EACH TEST
     //TODO -- Make sure to change the code below to use YOUR OWN entity class
     @BeforeEach
-    public void setUp() {      
+    public void setUp() {
 
-        
     }
 
     @AfterEach
@@ -90,41 +88,35 @@ public class PersonFacadeTest {
     }
 
     // TODO: Delete or change this method 
-    
-    
     @Test
     public void testGetAllPersons() {
-    List<Person> persons = new ArrayList();
-    persons.add(p1);
-    persons.add(p2);
-    PersonsDTO expResult = new PersonsDTO(persons);
-    PersonFacade personFacade = PersonFacade.getPersonFacade(emf);
-    PersonsDTO result = new PersonsDTO();
-    result = personFacade.getAllPersons();
-    assertEquals(expResult.getAll().size(), result.getAll().size());
+        List<Person> persons = new ArrayList();
+        persons.add(p1);
+        persons.add(p2);
+        PersonsDTO expResult = new PersonsDTO(persons);
+        PersonFacade personFacade = PersonFacade.getPersonFacade(emf);
+        PersonsDTO result = new PersonsDTO();
+        result = personFacade.getAllPersons();
+        assertEquals(expResult.getAll().size(), result.getAll().size());
     }
-    
-    @Disabled
+
+    //@Disabled
     @Test
-    public void testAddPerson(){
-    PersonFacade personFacade = PersonFacade.getPersonFacade(emf);
-    EntityManager em = emf.createEntityManager();
-    
-    int expResult = 3;
-    Person per = new Person("test3@test.dk", "Hans", "Hansen");
-    
-    per.addPhone(tel1);
-    per.setAddress(a1);
-    per.addHobby(h1);
-    
-    PersonDTO pDTO = new PersonDTO(per);
-    personFacade.addPerson(pDTO);
-    PersonsDTO result = personFacade.getAllPersons();
-    assertEquals(expResult, result.getAll().size());
-    
+    public void testAddPerson() {
+        PersonFacade personFacade = PersonFacade.getPersonFacade(emf);
+        EntityManager em = emf.createEntityManager();
+
+        int expResult = 3;
+        Person per = new Person("test3@test.dk", "Hans", "Hansen");
+
+        per.addPhone(tel1);
+        per.setAddress(a1);
+        per.addHobby(h1);
+        PersonDTO pDTO = new PersonDTO(per);
+        personFacade.addPerson(pDTO);
+        PersonsDTO result = personFacade.getAllPersons();
+        assertEquals(expResult, result.getAll().size());
+
     }
-    
-     
-            
 
 }

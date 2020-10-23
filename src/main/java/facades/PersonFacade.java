@@ -125,15 +125,21 @@ public class PersonFacade implements IPersonFacade {
         EntityManager em = getEntityManager();
         Person person = new Person(personDTO);
 
+        System.out.println(personDTO.getZipCode());
+        System.out.println(personDTO.getHobbyName());
         try {
-            Query cityQuery = em.createQuery("SELECT c FROM CityInfo c WHERE c.zipCode =:zip");
-            cityQuery.setParameter("zip", personDTO.getZipCode());
+            Query cityQuery = em.createQuery("SELECT c FROM CityInfo c WHERE c.zipCode =:zipcode");
+            cityQuery.setParameter("zipcode", personDTO.getZipCode());
             CityInfo cityInfo = (CityInfo) cityQuery.getSingleResult();
             person.setAddress(new Address(personDTO.getStreet(), cityInfo));
-            Query hobbyQuery = em.createQuery("SELECT h FROM Hobby h WHERE h.name =:name");
-            hobbyQuery.setParameter("name", personDTO.getHobbyName());
-            Hobby hobby = (Hobby) hobbyQuery.getSingleResult();
-            person.addHobby(hobby);
+
+            for (HobbyDTO hobbyDTO : personDTO.getHobby()) {
+                Query hobbyQuery = em.createQuery("SELECT h FROM Hobby h WHERE h.name =:name");
+                hobbyQuery.setParameter("name", hobbyDTO.getName());
+                Hobby hobby = (Hobby) hobbyQuery.getSingleResult();
+                person.addHobby(hobby);
+            }
+
             person.addPhone(new Phone(personDTO.getpNumber()));
 
             em.getTransaction().begin();

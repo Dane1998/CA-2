@@ -81,8 +81,8 @@ public class Person implements Serializable {
     }
 
     public void addHobby(Hobby hobby) {
-        if (hobby != null) {
-            this.hobbies.add(hobby);
+        this.hobbies.add(hobby);
+        if (hobby != null) {         
             hobby.addPerson(this);
         }
     }

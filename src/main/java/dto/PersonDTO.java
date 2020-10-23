@@ -5,6 +5,7 @@ import entities.Address;
 import entities.Hobby;
 import entities.Person;
 import entities.Phone;
+import java.util.ArrayList;
 import java.util.List;
      
 /**
@@ -21,7 +22,7 @@ public class PersonDTO {
     private String zipCode;
     private String city;
     private List<Phone> phoneNumber; 
-    private List<Hobby> hobby;
+    private List<HobbyDTO> hobby;
     private String pNumber;
     private String hobbyName;
 
@@ -32,10 +33,14 @@ public class PersonDTO {
         this.street = person.getAddress().getStreet();
         this.zipCode = person.getAddress().getCityInfo().getZipCode();
         this.city = person.getAddress().getCityInfo().getCity();       
-        this.hobby = person.getHobbies();
+        this.hobby = new ArrayList<>();
+        
+        for(Hobby hobby : person.getHobbies()){
+            this.hobby.add(new HobbyDTO(hobby));
+        }
     }
 
-    public PersonDTO(String firstName, String lastName, String email, String street, String zipCode, String city, String pNumber, String hobbyName) {
+    public PersonDTO(String firstName, String lastName, String email, String street, String zipCode, String city, List<HobbyDTO> hobby, List<Phone> phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -43,7 +48,7 @@ public class PersonDTO {
         this.zipCode = zipCode;
         this.city = city;
         this.phoneNumber = phoneNumber;
-        this.hobbyName = hobbyName;
+        this.hobby = hobby;
     }
 
     public String getpNumber() {
@@ -54,8 +59,6 @@ public class PersonDTO {
         this.pNumber = pNumber;
     }
     
-    
-
     public String getHobbyName() {
         return hobbyName;
     }
@@ -132,11 +135,11 @@ public class PersonDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<Hobby> getHobby() {
+    public List<HobbyDTO> getHobby() {
         return hobby;
     }
 
-    public void setHobby(List<Hobby> hobby) {
+    public void setHobby(List<HobbyDTO> hobby) {
         this.hobby = hobby;
     }
 
