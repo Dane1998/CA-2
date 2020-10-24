@@ -104,7 +104,7 @@ public class PersonFacadeTest {
     @Test 
     
     public void testGetAll(){
-        assertEquals(2, facade.getAll().size(),"Expected two rows in the databse");
+        assertEquals(3, facade.getAll().size(),"Expected two rows in the databse");
         System.out.println("Persons in the database: " + facade.getAll().size());
     }
     
@@ -128,4 +128,37 @@ public class PersonFacadeTest {
     
     }*/
 
+    
+    
+    @Test
+    public void testAdd() {
+        EntityManager em = emf.createEntityManager();
+        int expected = 0;
+        int result = 0;
+        try {
+            em.getTransaction().begin();
+            expected += em.createQuery("SELECT p FROM Person p", Phone.class).getResultList().size();
+            List<Hobby> hobbies = new ArrayList();
+            Hobby hobby = new Hobby("Hiking", "Not fun","f","f");
+            hobbies.add(hobby);
+            em.persist(hobby);
+            List<Phone> phones = new ArrayList();
+            Phone phone = new Phone("12236764578");
+            phones.add(phone);
+            em.persist(phone);
+            CityInfo ci = new CityInfo("2900", "Hellerup");
+            em.persist(ci);
+            Address address = new Address("Hellerupvej", ci);
+            em.persist(address);
+           
+           
+            em.getTransaction().commit();
+            facade.add(new Person("Artem", "Ivanov","what"));
+            result = em.createQuery("SELECT p FROM Person p", Phone.class).getResultList().size();
+        } finally {
+            em.close();
+        }
+        assertEquals(expected + 1, result);
+    
+}
 }

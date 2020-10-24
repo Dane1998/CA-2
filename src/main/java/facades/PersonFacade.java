@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.validation.constraints.Email;
+import managers.FacadeManager;
 
 /**
  *
@@ -145,6 +146,22 @@ public class PersonFacade implements IPersonFacade {
         }
         return new PersonDTO(person);
     }
+    
+    public Person add(Person person) {
+        EntityManager em = getEntityManager();
+        Person p = FacadeManager.getSingleResult(em.createQuery("SELECT person FROM Person person WHERE person.firstName = :firstName AND person.lastName = :lastName", Person.class).setParameter("firstName", person.getFirstName()).setParameter("lastName", person.getLastName()));
+        try {
+            if (p == null) {
+                p = person;
+                em.getTransaction().begin();
+                em.persist(p);
+                em.getTransaction().commit();
+            }
+        } finally {
+            em.close();
+        }
+        return p;
+    }
 
     @Override
     public PersonDTO deletePerson(long id) {
@@ -167,5 +184,5 @@ public class PersonFacade implements IPersonFacade {
     
         
     }
-
+ 
 }
