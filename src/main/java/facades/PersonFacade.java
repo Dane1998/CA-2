@@ -62,22 +62,17 @@ public class PersonFacade implements IPersonFacade {
 
     }
 
-    @Override
-    public PersonsDTO getAllPersons() {
-        EntityManager em = getEntityManager();
-        try {
-            return new PersonsDTO(em.createNamedQuery("Person.getAll").getResultList());
-        } finally {
-            em.close();
-        }
-    }
+   
+    
+    
 
-    //TODO
-    /* @Override
-    public Person add(Person person){
-        EntityManager em = getEntityManager();
-        
-    }*/
+  
+  public List<Person> getAll(){
+        return getEntityManager().createQuery("SELECT person FROM Person person", Person.class).getResultList();
+    }
+  
+  
+  
     public Person edit(Person person) {
         EntityManager em = getEntityManager();
         try {
@@ -159,6 +154,18 @@ public class PersonFacade implements IPersonFacade {
     @Override
     public PersonDTO editPerson(PersonDTO personDTO) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public PersonsDTO getAllPersons() {
+        EntityManager em = getEntityManager();
+        try {
+            return new PersonsDTO(em.createNamedQuery("Person.getAll").getResultList());
+        } finally {
+            em.close();
+        }
+    
+        
     }
 
 }

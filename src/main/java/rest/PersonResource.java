@@ -7,8 +7,11 @@ import dto.CityInfosDTO;
 import dto.PersonDTO;
 import dto.PersonsDTO;
 import entities.CityInfo;
+import entities.Person;
 import utils.EMF_Creator;
 import facades.PersonFacade;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -38,6 +41,7 @@ public class PersonResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public String getAllPersons() {
+       
         PersonsDTO persons = FACADE.getAllPersons();
         return GSON.toJson(persons.getAll());
     }
@@ -50,6 +54,22 @@ public class PersonResource {
         PersonDTO pAdded = FACADE.addPerson(p);
         return GSON.toJson(pAdded);
     } 
+    
+     @Path("all")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<PersonDTO> getAlL() {
+    List<PersonDTO> dto = new ArrayList();
+    
+    for(Person p : FACADE.getAll()){
+        dto.add(new PersonDTO(p));
+    }
+    return dto;
+    }
+    
+    
+    
+     
     
 }
 

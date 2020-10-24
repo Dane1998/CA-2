@@ -99,6 +99,15 @@ public class PersonFacadeTest {
         result = personFacade.getAllPersons();
         assertEquals(expResult.getAll().size(), result.getAll().size());
     }
+    
+    
+    @Test 
+    
+    public void testGetAll(){
+        assertEquals(2, facade.getAll().size(),"Expected two rows in the databse");
+        System.out.println("Persons in the database: " + facade.getAll().size());
+    }
+    
 
     //@Disabled
     /* @Test
