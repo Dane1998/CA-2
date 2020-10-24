@@ -101,10 +101,9 @@ public class PersonFacadeTest {
     }
     
     
-    @Test 
-    
+    @Test
     public void testGetAll(){
-        assertEquals(3, facade.getAll().size(),"Expected two rows in the databse");
+        assertEquals(3, facade.getAll().size(),"Expected three rows in the databse");
         System.out.println("Persons in the database: " + facade.getAll().size());
     }
     
@@ -129,7 +128,7 @@ public class PersonFacadeTest {
     }*/
 
     
-    
+    // test for de ekstra metoder som blev oprettet for at måske løse problemet med personer der ikke bliver added
     @Test
     public void testAdd() {
         EntityManager em = emf.createEntityManager();

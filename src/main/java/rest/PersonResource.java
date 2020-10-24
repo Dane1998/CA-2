@@ -54,7 +54,7 @@ public class PersonResource {
         PersonDTO pAdded = FACADE.addPerson(p);
         return GSON.toJson(pAdded);
     } 
-    
+    // prøvede at lave dette for at måske fikse fejlen af at personerne ikke bliver vist
      @Path("all")
     @GET
     @Produces({MediaType.APPLICATION_JSON})

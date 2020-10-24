@@ -146,7 +146,7 @@ public class PersonFacade implements IPersonFacade {
         }
         return new PersonDTO(person);
     }
-    
+    // lavede det for at prøve at fiske fejlen ved at personerne ikke bliver tilføjet med den anden metode
     public Person add(Person person) {
         EntityManager em = getEntityManager();
         Person p = FacadeManager.getSingleResult(em.createQuery("SELECT person FROM Person person WHERE person.firstName = :firstName AND person.lastName = :lastName", Person.class).setParameter("firstName", person.getFirstName()).setParameter("lastName", person.getLastName()));
